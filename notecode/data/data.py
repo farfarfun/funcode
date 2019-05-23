@@ -1,3 +1,4 @@
+import numpy as np
 import pandas as pd
 from sklearn.preprocessing import StandardScaler
 
@@ -40,8 +41,8 @@ def get_adult_data():
 
     for col in continus_columns:
         ss = StandardScaler()
-        train_data[col] = ss.fit_transform(train_data[[col]])
-        test_data[col] = ss.transform(test_data[[col]])
+        train_data[col] = ss.fit_transform(train_data[[col]].astype(np.float64))
+        test_data[col] = ss.transform(test_data[[col]].astype(np.float64))
 
     train_y = train_data['label']
     train_x = train_data.drop(['label'], axis=1)
