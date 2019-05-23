@@ -1,13 +1,17 @@
+import zipfile
+
 import numpy as np
 import pandas as pd
 from sklearn.preprocessing import StandardScaler
 
 from .download import download_file
 
+data_root = '/content/tmp/'
+
 
 def get_adult_data():
-    train_path = "/content/tmp/data/adult.data.txt"
-    test_path = "/content/tmp/data/adult.test.txt"
+    train_path = data_root + "/data/adult.data.txt"
+    test_path = data_root + "/data/adult.test.txt"
 
     download_file(url="https://raw.githubusercontent.com/1007530194/data/master/recommendation/data/adult.data.txt",
                   path=train_path)
@@ -50,3 +54,24 @@ def get_adult_data():
     test_x = test_data.drop(['label'], axis=1)
 
     return train_x, train_y, test_x, test_y
+
+
+def get_electronics_data():
+    path_root = data_root + "/data/electronics/"
+
+    path1 = path_root + "/reviews_Electronics_5.json.gz"
+    path2 = path_root + "/meta_Electronics.json.gz"
+
+    download_file(url="http://snap.stanford.edu/data/amazon/productGraph/categoryFiles/reviews_Electronics_5.json.gz",
+                  path=path1)
+
+    download_file(url="http://snap.stanford.edu/data/amazon/productGraph/categoryFiles/meta_Electronics.json.gz",
+                  path=path2)
+
+    f = zipfile.ZipFile(path1, 'r')
+    for file in f.namelist():
+        f.extract(file, path_root)
+
+    f = zipfile.ZipFile(path2, 'r')
+    for file in f.namelist():
+        f.extract(file, path_root)
