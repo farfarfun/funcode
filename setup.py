@@ -11,7 +11,7 @@ from setuptools import setup, find_packages
 install_requires = []
 
 setup(name='notecode',
-      version='0.0.1',
+      version='0.0.2',
       description='notecode',
       author='euler',
       author_email='1007530194@qq.com',
