@@ -6,9 +6,9 @@
 # @File    : data.py
 # @Software: PyCharm
 
+import gzip
 import pickle
 import random
-import zipfile
 
 import numpy as np
 import pandas as pd
@@ -78,16 +78,28 @@ def get_electronics_data():
     download_file(url="http://snap.stanford.edu/data/amazon/productGraph/categoryFiles/meta_Electronics.json.gz",
                   path=path2)
 
-    f = zipfile.ZipFile(path1, 'r')
-    for file in f.namelist():
-        f.extract(file, path_root)
+    def un_gzip(file_name):
+        """ungz zip file"""
+        f_name = file_name.replace(".gz", "")
 
-    f = zipfile.ZipFile(path2, 'r')
-    for file in f.namelist():
-        f.extract(file, path_root)
+        g_file = gzip.GzipFile(file_name)
+
+        open(f_name, "w+").write(g_file.read())
+
+        g_file.close()
+
+    un_gzip(path1)
+    un_gzip(path2)
+
+    # f = zipfile.ZipFile(path1, 'r')
+    # for file in f.namelist():
+    #     f.extract(file, path_root)
+    #
+    # f = zipfile.ZipFile(path2, 'r')
+    # for file in f.namelist():
+    #     f.extract(file, path_root)
 
     def convert_pd():
-
         def to_df(file_path):
             with open(file_path, 'r') as fin:
                 df = {}
