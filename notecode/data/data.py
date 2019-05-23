@@ -1,6 +1,7 @@
 import pandas as pd
-from download import download_file
 from sklearn.preprocessing import StandardScaler
+
+from .download import download_file
 
 
 def get_adult_data():
